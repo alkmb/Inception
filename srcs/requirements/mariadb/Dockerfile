@@ -1,9 +1,5 @@
 FROM debian:buster
 
-WORKDIR /home/akambou/Desktop/Inception/srcs/wordpress
-WORKDIR /home/akambou/Desktop/Inception/srcs/mariadb
-
-WORKDIR .
 
 RUN apt-get update -y && apt-get install mariadb-server -y
 
