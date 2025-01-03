@@ -1,8 +1,9 @@
 <?php
-define( 'DB_NAME', getenv('db_name') );
-define( 'DB_USER', getenv('db_user') );
-define( 'DB_PASSWORD', getenv('db_pwd') );
-define( 'DB_HOST', 'mariadb' );
+// These lines are missing in wp-config.php but should be added:
+define('DB_NAME', 'lol1');
+define('DB_USER', 'ss');
+define('DB_PASSWORD', 'tt');
+define('DB_HOST', 'mariadb');
 define( 'DB_CHARSET', 'utf8' );
 define( 'DB_COLLATE', '' );
 define( 'WP_ALLOW_REPAIR', true );

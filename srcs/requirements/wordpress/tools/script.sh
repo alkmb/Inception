@@ -1,5 +1,8 @@
 #!/bin/bash
-mkdir -p /var/www/html
+
+# Clear existing WordPress files
+rm -rf /var/www/html/*
+
 cd /var/www/html
 
 # Download and setup WP-CLI
@@ -11,13 +14,13 @@ mv wp-cli.phar /usr/local/bin/wp
 wp core download --allow-root
 
 # Configure wp-config.php
-mv /wp-config.php /var/www/html/wp-config.php
+cp /wp-config.php /var/www/html/
 
-# Update database settings
-sed -i "s/define( 'DB_NAME'.*/define( 'DB_NAME', '$db_name' );/g" wp-config.php
-sed -i "s/define( 'DB_USER'.*/define( 'DB_USER', '$db_user' );/g" wp-config.php
-sed -i "s/define( 'DB_PASSWORD'.*/define( 'DB_PASSWORD', '$db_pwd' );/g" wp-config.php
-sed -i "s/define( 'DB_HOST'.*/define( 'DB_HOST', 'mariadb' );/g" wp-config.php
+# Wait for MariaDB
+while ! mysqladmin ping -h"mariadb" --silent; do
+    echo "Waiting for MariaDB..."
+    sleep 2
+done
 
 # Install WordPress with environment variables
 wp core install --url=$DOMAIN_NAME/ \
@@ -28,15 +31,7 @@ wp core install --url=$DOMAIN_NAME/ \
                --skip-email \
                --allow-root
 
-# Update site URLs to ensure proper redirection
-wp option update home "https://$DOMAIN_NAME" --allow-root
-wp option update siteurl "https://$DOMAIN_NAME" --allow-root
-
-# Create additional user (if needed)
-wp user create $WP_USR $WP_EMAIL --role=author --user_pass=$WP_PWD --allow-root
-
 # Configure PHP-FPM
 sed -i 's/listen = \/run\/php\/php7.3-fpm.sock/listen = 9000/g' /etc/php/7.3/fpm/pool.d/www.conf
 mkdir -p /run/php
-
 /usr/sbin/php-fpm7.3 -F
