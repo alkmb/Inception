@@ -17,9 +17,9 @@ mysqld_safe --datadir=/var/lib/mysql &
 # the build is shit at the moment
 
 # # Wait for MySQL to be ready
-# until mysqladmin ping >/dev/null 2>&1; do
-#     sleep 1
-# done
+ until mysqladmin ping >/dev/null 2>&1; do
+     sleep 1
+ done
 
 # Setup database and users
 mysql -u root << EOF
@@ -30,8 +30,6 @@ GRANT ALL PRIVILEGES ON ${db_name}.* TO '${db_user}'@'%';
 FLUSH PRIVILEGES;
 EOF
 
-# Stop mysqld_safe
-mysqladmin -u root shutdown
 
 # Start MySQL normally
 exec mysqld --user=mysql
