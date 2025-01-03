@@ -16,6 +16,10 @@ wp core download --allow-root
 # Configure wp-config.php
 cp /wp-config.php /var/www/html/
 
+sed -i -r "s/db1/$db_name/1" wp-config.php
+sed -i -r "s/user1/$db_user/1" wp-config.php
+sed -i -r "s/password1/$db_pwd/1" wp-config.php
+
 # Wait for MariaDB
 while ! mysqladmin ping -h"mariadb" --silent; do
     echo "Waiting for MariaDB..."
