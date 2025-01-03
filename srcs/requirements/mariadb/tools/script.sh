@@ -13,7 +13,7 @@ fi
 # Start MySQL with mysqld_safe
 mysqld_safe --datadir=/var/lib/mysql &
 
-# the code above works needs to go on re - down - up; becuase
+# the code above works needs to go on re/up - down - up; becuase
 # the build is shit at the moment
 
 # # Wait for MySQL to be ready
