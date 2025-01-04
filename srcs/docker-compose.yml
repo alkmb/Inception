@@ -16,6 +16,7 @@ volumes:
 services:
         nginx:
                 container_name: nginx
+                image: nginx
                 build: ./requirements/nginx
                 ports:
                         - "443:443"
@@ -31,6 +32,7 @@ services:
 
         mariadb:
                 container_name: mariadb
+                image: mariadb
                 build: ./requirements/mariadb
                 volumes:
                         - mariadb:/var/lib/mysql
@@ -42,6 +44,7 @@ services:
 
         wordpress:
                 container_name: wordpress
+                image: wordpress
                 build: ./requirements/wordpress
                 depends_on: 
                         - mariadb

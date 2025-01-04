@@ -13,13 +13,6 @@ fi
 # Start MySQL with mysqld_safe
 mysqld_safe --datadir=/var/lib/mysql &
 
-# the code above works needs to go on re/up - down - up; becuase
-# the build is shit at the moment
-
-# # Wait for MySQL to be ready
- until mysqladmin ping >/dev/null 2>&1; do
-     sleep 1
- done
 
 # Setup database and users
 mysql -u root << EOF
